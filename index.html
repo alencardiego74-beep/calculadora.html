@@ -86,19 +86,24 @@
       const n3 = parseFloat(document.getElementById('n3').value) || 0;
       const n4 = parseFloat(document.getElementById('n4').value) || 0;
 
+      const soma = n1 + n2 + n3 + n4;
       const mu = (n1 * 1 + n2 * 2 + n3 * 3 + n4 * 4) / 10;
 
       let msg = `<strong>Média ponderada:</strong> ${mu.toFixed(2)}<br>`;
+      msg += `<strong>Soma das médias:</strong> ${soma.toFixed(2)}<br>`;
 
-      if (mu >= 6) {
+      if (soma < 18) {
+        msg += `<span style='color:red'>Você está de recuperação! ⚠️</span>`;
+      } 
+      else if (mu >= 6) {
         msg += `<span style='color:green'>Você está aprovado! ✅</span>`;
-      } else {
+      } 
+      else {
         msg += `<span style='color:orange'>Você está na prova final.</span><br>`;
 
         const deseja = confirm('Deseja calcular quanto precisa tirar na prova final?');
         if (deseja) {
           const notaNecessaria = (50 - 6 * mu) / 4;
-
           if (notaNecessaria > 10) {
             msg += `<span style='color:red'>Você precisaria de ${notaNecessaria.toFixed(2)} pontos — acima de 10, impossível de alcançar.</span>`;
           } else if (notaNecessaria <= 0) {
@@ -114,3 +119,4 @@
   </script>
 </body>
 </html>
+

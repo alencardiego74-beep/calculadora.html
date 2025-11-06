@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Notas</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f6f8;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background: white;
+      padding: 20px 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      width: 350px;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      margin-top: 15px;
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      background-color: #007bff;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .resultado {
+      margin-top: 15px;
+      padding: 10px;
+      border-radius: 5px;
+      background-color: #f1f3f5;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Calculadora de Notas</h1>
+    <label>Média da 1:</label>
+    <input type="number" id="n1" step="0.01" placeholder="Ex: 7.5">
+
+    <label>Média da 2:</label>
+    <input type="number" id="n2" step="0.01" placeholder="Ex: 6.0">
+
+    <label>Média da 3:</label>
+    <input type="number" id="n3" step="0.01" placeholder="Ex: 8.0">
+
+    <label>Média da 4:</label>
+    <input type="number" id="n4" step="0.01" placeholder="Ex: 9.0">
+
+    <button onclick="calcularMedia()">Calcular</button>
+
+    <div id="resultado" class="resultado"></div>
+  </div>
+
+  <script>
+    function calcularMedia() {
+      const n1 = parseFloat(document.getElementById('n1').value) || 0;
+      const n2 = parseFloat(document.getElementById('n2').value) || 0;
+      const n3 = parseFloat(document.getElementById('n3').value) || 0;
+      const n4 = parseFloat(document.getElementById('n4').value) || 0;
+
+      const mu = (n1 * 1 + n2 * 2 + n3 * 3 + n4 * 4) / 10;
+
+      let msg = `<strong>Média ponderada:</strong> ${mu.toFixed(2)}<br>`;
+
+      if (mu >= 6) {
+        msg += `<span style='color:green'>Você está aprovado! ✅</span>`;
+      } else {
+        msg += `<span style='color:orange'>Você está na prova final.</span><br>`;
+
+        const deseja = confirm('Deseja calcular quanto precisa tirar na prova final?');
+        if (deseja) {
+          const notaNecessaria = (50 - 6 * mu) / 4;
+
+          if (notaNecessaria > 10) {
+            msg += `<span style='color:red'>Você precisaria de ${notaNecessaria.toFixed(2)} pontos — acima de 10, impossível de alcançar.</span>`;
+          } else if (notaNecessaria <= 0) {
+            msg += `<span style='color:green'>Você já tem nota suficiente para passar!</span>`;
+          } else {
+            msg += `<strong>Você precisa de ${notaNecessaria.toFixed(2)} pontos na prova final.</strong>`;
+          }
+        }
+      }
+
+      document.getElementById('resultado').innerHTML = msg;
+    }
+  </script>
+</body>
+</html>
